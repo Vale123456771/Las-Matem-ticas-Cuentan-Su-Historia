@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libro Holográfico: Códigos Galácticos</title>
+    <style>
+        /* --- Estilos Holograma Galáctico-Matemático --- */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px 5px rgba(115, 200, 255, 0.4), 0 0 25px 10px rgba(115, 200, 255, 0.3), inset 0 0 10px rgba(115, 200, 255, 0.2); }
+            50% { box-shadow: 0 0 20px 8px rgba(115, 200, 255, 0.5), 0 0 35px 15px rgba(115, 200, 255, 0.4), inset 0 0 15px rgba(115, 200, 255, 0.3); }
+        }
+
+        @keyframes scanlines {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+
+        body {
+            background: #000005; /* Fondo casi negro para el espacio */
+            /* Añadir un patrón de estrellas sutil si se desea (requiere imagen o gradientes complejos) */
+            /* background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px);
+            background-size: 50px 50px, 150px 150px;
+            background-position: 0 0, 75px 75px; */
+            font-family: 'Consolas', 'Lucida Console', 'Courier New', monospace; /* Fuente técnica */
+            color: #c0d0ff; /* Color base de texto azulado claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            perspective: 1000px; /* Necesario para transformaciones 3D si se usan */
+            overflow: hidden; /* Evitar barras de scroll en el body */
+        }
+
+        .holographic-book-container {
+            /* Contenedor que simula la proyección holográfica */
+            position: relative;
+            width: 85%;
+            max-width: 900px;
+            height: 85vh;
+            background: transparent; /* El holograma no tiene fondo sólido */
+            border-radius: 5px;
+            /* Efecto de brillo principal con animación */
+            animation: pulse-glow 5s infinite ease-in-out;
+            /* Ligera inclinación para efecto 3D */
+            transform: rotateY(-5deg) rotateX(3deg);
+            transition: transform 0.5s ease; /* Suavizar cambios */
+        }
+
+        .holographic-book-container:hover {
+             transform: rotateY(0deg) rotateX(0deg) scale(1.02); /* Se endereza al pasar el ratón */
+        }
+
+
+        /* Overlay de líneas de escaneo */
+        .holographic-book-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                rgba(150, 220, 255, 0.08) 50%,
+                transparent 50%
+            );
+            background-size: 100% 4px; /* Tamaño de las líneas */
+            opacity: 0.5;
+            pointer-events: none; /* Para poder interactuar con lo de abajo */
+            z-index: 3; /* Por encima del libro pero debajo de popups si los hubiera */
+            animation: scanlines 20s linear infinite; /* Animación de movimiento lento */
+            border-radius: inherit; /* Heredar bordes redondeados */
+        }
+
+
+        .libro-content {
+            /* El contenido "dentro" del holograma, con forma de libro */
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 20, 45, 0.85); /* Fondo azul muy oscuro semitransparente */
+            border: 1px solid rgba(115, 200, 255, 0.5); /* Borde azulado translúcido */
+            box-shadow: inset 0 0 15px rgba(115, 200, 255, 0.2); /* Sombra interior para profundidad */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: inherit;
+            position: relative; /* Para z-index */
+            z-index: 1; /* Detrás de las scanlines */
+        }
+
+        .pagina-contenido {
+            flex-grow: 1;
+            padding: 35px 50px;
+            overflow-y: auto;
+            line-height: 1.8; /* Más espaciado */
+            font-size: 1.1em;
+            color: #d0e0ff; /* Color de texto principal ligeramente más brillante */
+            display: none;
+            text-shadow: 0 0 3px rgba(200, 230, 255, 0.3); /* Sutil brillo en el texto */
+            /* Scrollbar estilizado */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(115, 200, 255, 0.5) rgba(10, 20, 45, 0.8);
+        }
+        .pagina-contenido::-webkit-scrollbar { width: 8px; }
+        .pagina-contenido::-webkit-scrollbar-track { background: rgba(10, 20, 45, 0.8); }
+        .pagina-contenido::-webkit-scrollbar-thumb {
+            background-color: rgba(115, 200, 255, 0.5);
+            border-radius: 4px;
+            border: 2px solid rgba(10, 20, 45, 0.8);
+        }
+
+        .pagina-contenido.activa {
+            display: block;
+        }
+
+        .pagina-contenido h1, .pagina-contenido h2 {
+             color: #ffffff; /* Blanco brillante para títulos */
+             text-shadow: 0 0 8px rgba(170, 220, 255, 0.8), 0 0 15px rgba(170, 220, 255, 0.5); /* Brillo más intenso */
+             border-bottom: 1px solid rgba(115, 200, 255, 0.4);
+             padding-bottom: 10px;
+             margin-bottom: 25px;
+             font-weight: bold;
+             letter-spacing: 1px;
+        }
+
+        .pagina-contenido:first-child { text-align: center; padding-top: 10vh; }
+         .pagina-contenido:first-child h1 {
+             font-size: 3em;
+             border-bottom: none;
+         }
+         .pagina-contenido:first-child p {
+            color: #90a0d0;
+            font-size: 1.2em;
+            text-shadow: 0 0 3px rgba(150, 180, 230, 0.4);
+         }
+
+         .pagina-contenido code {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #90f0ff; /* Cian brillante para código/números */
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 1em;
+            text-shadow: 0 0 5px rgba(144, 240, 255, 0.7);
+            border: 1px solid rgba(144, 240, 255, 0.3);
+         }
+
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 50px;
+            border-top: 1px solid rgba(115, 200, 255, 0.5); /* Borde azulado */
+            background-color: rgba(5, 10, 25, 0.8); /* Fondo muy oscuro y translúcido */
+            position: relative; /* Para z-index si fuera necesario */
+            z-index: 2; /* Encima del contenido de página */
+        }
+
+        .navegacion button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: rgba(15, 30, 60, 0.7); /* Botón semitransparente */
+            color: #d0e0ff; /* Texto azulado claro */
+            border: 1px solid rgba(115, 200, 255, 0.6);
+            border-radius: 5px;
+            font-family: inherit;
+            text-shadow: 0 0 5px rgba(200, 230, 255, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .navegacion button:hover:not(:disabled) {
+             background-color: rgba(30, 50, 90, 0.9);
+             color: #ffffff;
+             border-color: rgba(170, 220, 255, 0.9);
+             box-shadow: 0 0 12px rgba(170, 220, 255, 0.7);
+        }
+
+        .navegacion button:disabled {
+            cursor: not-allowed;
+            opacity: 0.3;
+            box-shadow: none;
+             border-color: rgba(115, 200, 255, 0.3);
+             background-color: rgba(15, 30, 60, 0.4);
+        }
+
+        .numero-pagina {
+             font-size: 1em;
+             color: #a0c0ff;
+             align-self: center;
+             text-shadow: 0 0 5px rgba(160, 192, 255, 0.6);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="holographic-book-container">
+        <div class="libro-content">
+            <div class="pagina-contenido activa">
+                <h1>Las Matemáticas Cuentan Su Historia</h1>
+                <p>Autores:</p>
+                <p>Andres Rojas</p>
+                <p>Valentina Taque</p>
+                <p><code>Andro-Radix y Nébula-Tina te dan la bienvenida al planeta Numerix</code></p>
+            </div>
+
+            <div class="pagina-contenido">
+                <h2>CAPITULO 1: Constantes Cósmicas</h2>
+                <p>El universo observable opera bajo un conjunto de reglas matemáticas $U = \{ \mathbb{R}, \mathbb{C}, \mathcal{L} \}$. La constante $c$ (velocidad de la luz en vacío) define el límite causal. $c \approx 299,792,458 \, m/s$.</p>
+                <p>La navegación hiperespacial requiere calcular vectores en $\mathbb{R}^n$ donde $n > 3$. El error $E = || \vec{v}_{actual} - \vec{v}_{calculado} ||$ debe minimizarse.</p>
+                <p><code>Vector subspace interpolation required...</code></p>
+                <p>Considerando la métrica de Alcubierre para $ds^2$.</p>
+            </div>
+
+            <div class="pagina-contenido">
+                <p>La probabilidad de encontrar una civilización tipo II en este cuadrante $\gamma$ se calcula mediante la ecuación de Drake modificada: $N = R^* \cdot f_p \cdot n_e \cdot f_l \cdot f_i \cdot f_c \cdot L \cdot \Phi_{holo}$. Donde $\Phi_{holo}$ es el factor de detección holográfica.</p>
+                <p>Análisis espectral de la Nebulosa KFR-7 revela firmas de xenomateriales con número atómico $Z > 137$. Inestable.</p>
+                <p><code>WARNING: Quantum foam instability detected.</code></p>
+            </div>
+
+             <div class="pagina-contenido">
+                <h2>Sección $\aleph_0$: Bucles Temporales</h2>
+                <p>La recursividad $T(n) = T(n-1) + \delta_t$ puede generar paradojas si $\delta_t$ viola la causalidad local. Evitar ciclos cerrados de tipo tiempo (CTLs).</p>
+                <p>La matriz de transición temporal $M_{t \to t'}$ debe ser unitaria para conservar la información.</p>
+                <p><code>if (currentTime < paradoxThreshold) { continue; } else { initiate_emergency_shutdown(error_code=0xDEADBEEF); }</code></p>
+            </div>
+
+            <div class="pagina-contenido">
+                <p>Transmisión finalizada.</p>
+                <p>Checksum: <code>a4b1c8f0e3d9a1b3</code></p>
+                <p>Desconectando proyección holográfica...</p>
+                <p>$\mathbb{QED}$</p>
+            </div>
+            <div class="navegacion">
+                <button id="btn-anterior" onclick="irPaginaAnterior()">&lt;&lt; -</button>
+                <span class="numero-pagina" id="num-pagina"></span>
+                <button id="btn-siguiente" onclick="irPaginaSiguiente()">+ &gt;&gt;</button>
+            </div>
+        </div> </div> <script>
+        // --- El CÓDIGO JAVASCRIPT es el MISMO que antes ---
+        // (Sigue controlando qué página está activa)
+
+        const paginas = document.querySelectorAll('.pagina-contenido');
+        const btnAnterior = document.getElementById('btn-anterior');
+        const btnSiguiente = document.getElementById('btn-siguiente');
+        const numPaginaSpan = document.getElementById('num-pagina');
+        let paginaActualIndice = 0;
+
+        function mostrarPagina(indice) {
+            paginas.forEach((pagina, idx) => {
+                // Usar setTimeout para un pequeño delay en la aparición/desaparición puede dar un efecto más "tecnológico"
+                // Pero complica la lógica. Mantenemos el cambio directo por simplicidad.
+                pagina.classList.remove('activa');
+            });
+            paginas[indice].classList.add('activa');
+
+            // Usamos "Coords" como término temático para la página
+            numPaginaSpan.textContent = `Coords [${indice + 1}/${paginas.length}]`;
+            btnAnterior.disabled = indice === 0;
+            btnSiguiente.disabled = indice === paginas.length - 1;
+
+             // Asegurarse que la página se muestre desde arriba
+             if (paginas[indice]) {
+                paginas[indice].scrollTop = 0;
+             }
+        }
+
+        function irPaginaSiguiente() {
+            if (paginaActualIndice < paginas.length - 1) {
+                paginaActualIndice++;
+                mostrarPagina(paginaActualIndice);
+            }
+        }
+
+        function irPaginaAnterior() {
+            if (paginaActualIndice > 0) {
+                paginaActualIndice--;
+                mostrarPagina(paginaActualIndice);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Llama inicial para mostrar la primera página
+             setTimeout(() => mostrarPagina(paginaActualIndice), 100); // Pequeño delay para que se vea mejor la carga inicial
+        });
+
+    </script>
+
+</body>
+</html>
