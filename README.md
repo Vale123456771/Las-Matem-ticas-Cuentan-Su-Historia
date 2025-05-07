@@ -1,1 +1,1 @@
-# Los Guardianes De Los Números
+Una guía galáctica para enseñar la Teoría de Números
