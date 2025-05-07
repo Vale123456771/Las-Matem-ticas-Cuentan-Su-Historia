@@ -43,7 +43,7 @@
         .pagina-contenido {
             flex-grow: 1;
             padding: 30px 50px; /* Ajustar padding */
-            overflow-y: auto;
+            overflow-y: hidden; /* <<-- MODIFICADO: Oculta cualquier contenido que se desborde */
             line-height: 1.8; /* Mayor espaciado */
             font-size: 1.1em;
             color: #a0f0ff; /* Cian claro para el contenido */
@@ -88,27 +88,7 @@
             0% { background-position: 0 0; }
             100% { background-position: 0 100%; } /* Mueve las líneas hacia abajo */
         }
-
-
-        /* Scrollbar con estilo oscuro (funciona en WebKit/Blink - Chrome, Safari, Edge) */
-        .pagina-contenido::-webkit-scrollbar {
-            width: 8px;
-        }
-        .pagina-contenido::-webkit-scrollbar-track {
-            background: #0b1120; /* Fondo del track oscuro */
-        }
-        .pagina-contenido::-webkit-scrollbar-thumb {
-            background-color: #00ffff; /* Color del thumb (barra) cian */
-            border-radius: 4px;
-            border: 2px solid #0b1120; /* Espacio alrededor del thumb */
-        }
-        /* Estilo para scrollbar en Firefox */
-        .pagina-contenido {
-            scrollbar-width: thin; /* Firefox */
-            scrollbar-color: #00ffff #0b1120; /* Firefox: thumb track */
-        }
-
-
+                
         /* Estilos para Títulos y elementos matemáticos/código */
         .pagina-contenido h1, .pagina-contenido h2 {
              font-family: 'Orbitron', sans-serif; /* Fuente diferente para títulos */
@@ -270,10 +250,10 @@
                 font-size: 1.1em;
                 margin-bottom: 3px; /* Reducir margen en responsive */
             }
-            /* Ajuste específico para el margen del último párrafo en la portada responsive */
-           .pagina-contenido:first-child p:last-of-type {
-               margin-bottom: 15px; /* Mantener un margen antes del código en responsive */
-           }
+            /* Ajuste específico para el margen del último párrafo en la portada responsive */
+           .pagina-contenido:first-child p:last-of-type {
+               margin-bottom: 15px; /* Mantener un margen antes del código en responsive */
+           }
 
 
             .navegacion {
@@ -307,7 +287,7 @@
         <div class="pagina-contenido">
             <h2>Capítulo 1: El Enigma de los Números de Numerix: ¿De Dónde Surgieron?</h2>
             <p>En el maravilloso planeta Numerix, todo estaba hecho de Números Naturales. Nébula-Tina explicó una vez a un grupo de pequeños numeritos curiosos:</p>
-            <p>-Los Números Naturales son como las estrellas brillantes que podemos contar: el 1, el 2, el 3, ¡y así hasta el infinito! Son los números que usamos para contar cuántas flores espaciales hay en un campo o cuántos meteoritos pasan volando. <span>$\frac{d(historia)}{dt} = k \cdot Emocion}$</span>.</p>
+            <p>Nuestro protagonista, un simple navegador de datos llamado Alex, compilaba logs binarios, ignorante de las ecuaciones diferenciales que regirían su destino. <span>$\frac{d(historia)}{dt} = k \cdot Emocion}$</span>.</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         </div>
 
@@ -357,7 +337,8 @@
             if (indice >= 0 && indice < paginas.length) {
                 paginas[indice].classList.add('activa');
                 numPaginaSpan.textContent = `Sector ${indice + 1} / ${paginas.length}`; // Cambiado a "Sector"
-                // Vuelve al inicio del scroll de la página
+                // Con overflow: hidden, scrollTop = 0 ya no es estrictamente necesario para el usuario,
+                // pero lo mantenemos por si cambias a otro overflow después.
                 paginas[indice].scrollTop = 0;
             }
 
