@@ -1,473 +1,376 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Libro Virtual - Galáctico Matemático</title>
-
     <style>
+        /* --- Estilos Galáctico-Matemáticos Mejorados --- */
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap'); /* Importar fuente futurista */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap'); /* Opcional: Fuente para títulos */
 
-        /* --- Estilos Galáctico-Matemáticos --- */
 
         body {
-
-            /* Fondo oscuro simulando el espacio profundo con un gradiente sutil */
-
-            background: linear-gradient(to bottom, #0a0f23, #1b274a);
-
-            /* Fuente monoespaciada para un toque técnico/matemático */
-
-            font-family: 'Consolas', 'Courier New', monospace;
-
-            /* Color de texto principal claro para contraste */
-
-            color: #e0e0f0;
-
+            background: linear-gradient(to bottom, #01041a, #0a1538); /* Fondo oscuro más profundo */
+            font-family: 'Share Tech Mono', monospace; /* Fuente principal monoespaciada */
+            color: #d0d0e0; /* Color de texto principal claro */
             display: flex;
-
             justify-content: center;
-
             align-items: center;
-
             min-height: 100vh;
-
             margin: 0;
-
-            /* Opcional: Añadir un patrón sutil de estrellas o cuadrícula (más complejo) */
-
-            /* background-image: url('path/to/stars.png'); */
-
+            overflow: hidden; /* Evita scroll de body */
         }
-
-
 
         .libro-container {
-
-            width: 80%;
-
-            max-width: 800px;
-
-            /* Fondo del libro ligeramente más claro que el body */
-
-            background-color: rgba(16, 24, 40, 0.9); /* Azul oscuro casi opaco */
-
-            /* Borde con un color neón/galáctico */
-
-            border: 1px solid #4a5a94; /* Azul neón suave */
-
-            /* Sombra con efecto de brillo azulado */
-
-            box-shadow: 0 0 25px rgba(74, 90, 148, 0.5);
-
+            width: 90%; /* Más ancho en pantallas grandes */
+            max-width: 900px; /* Ancho máximo */
+            background-color: rgba(5, 10, 25, 0.8); /* Base muy oscura, casi negra, translúcida */
+            border: 2px solid #00ffff; /* Borde cian brillante */
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4); /* Sombra con brillo cian */
             display: flex;
-
             flex-direction: column;
-
-            height: 80vh;
-
+            height: 90vh; /* Más alto */
             overflow: hidden;
-
-            border-radius: 3px; /* Bordes ligeramente redondeados */
-
+            border-radius: 8px; /* Bordes más redondeados */
+            position: relative; /* Para posicionar pseudo-elementos si se usan para el borde exterior */
+            /* Efecto 3D sutil de inclinación */
+            transform: rotateX(5deg) rotateZ(-3deg);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-in-out; /* Transición para el efecto 3D */
         }
-
-
 
         .pagina-contenido {
-
             flex-grow: 1;
-
-            padding: 30px 45px; /* Ajustar padding si es necesario */
-
-            overflow-y: auto;
-
-            line-height: 1.7; /* Espaciado para monoespaciada */
-
-            font-size: 1.05em; /* Ligeramente más grande */
-
-            /* Color de texto principal dentro de la página */
-
-            color: #c0c5d1; /* Gris azulado claro */
-
+            padding: 30px 50px; /* Ajustar padding */
+            /* ANTES: overflow-y: auto; */
+             overflow-y: hidden; /* <<-- MODIFICADO: Oculta cualquier contenido que se desborde */
+            line-height: 1.8; /* Mayor espaciado */
+            font-size: 1.1em;
+            color: #a0f0ff; /* Cian claro para el contenido */
             display: none; /* Oculta páginas por defecto */
-
-            /* Scrollbar con estilo oscuro (funciona en WebKit/Blink - Chrome, Safari, Edge) */
-
-            scrollbar-width: thin; /* Firefox */
-
-            scrollbar-color: #4a5a94 #101828; /* Firefox: thumb track */
-
+            position: relative; /* Necesario para pseudo-elementos holográficos internos */
+            z-index: 1; /* Asegura que el contenido esté sobre los efectos */
         }
 
-        /* Estilo para scrollbar en Chrome/Safari/Edge */
-
-        .pagina-contenido::-webkit-scrollbar {
-
-            width: 8px;
-
-        }
-
-        .pagina-contenido::-webkit-scrollbar-track {
-
-            background: #101828; /* Fondo del track oscuro */
-
-        }
-
-        .pagina-contenido::-webkit-scrollbar-thumb {
-
-            background-color: #4a5a94; /* Color del thumb (barra) */
-
-            border-radius: 4px;
-
-            border: 2px solid #101828; /* Espacio alrededor del thumb */
-
-        }
-
-
-
-
-
+        /* --- Efecto Holográfico en la Página Activa --- */
         .pagina-contenido.activa {
-
             display: block; /* Muestra la página activa */
+            /* Filtros para el color y el brillo */
+            filter: brightness(1.2) contrast(1.3);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.6); /* Sombra de texto brillante */
+            animation: flicker 5s linear infinite alternate; /* Animación de parpadeo sutil */
+            background: rgba(0, 15, 30, 0.6); /* Fondo ligeramente translúcido y oscuro para la pantalla */
+        }
 
+        /* Pseudo-elemento para líneas de escaneo (opcional, puede afectar rendimiento) */
+        .pagina-contenido.activa::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px); /* Líneas cian */
+            background-size: 100% 5px; /* Espaciado de líneas */
+            pointer-events: none; /* No interfiere con el texto */
+            animation: moveScanlines 8s linear infinite; /* Mueve las líneas lentamente */
+            z-index: 0; /* Asegura que esté detrás del contenido */
         }
 
 
+        /* Animaciones */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.98; } /* Parpadeo muy sutil */
+        }
 
-        /* Estilos para Títulos y elementos matemáticos simulados */
+        @keyframes moveScanlines {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; } /* Mueve las líneas hacia abajo */
+        }
 
+        /* Estilos para Títulos y elementos matemáticos/código */
         .pagina-contenido h1, .pagina-contenido h2 {
-
-             color: #87cefa; /* Azul cielo claro para títulos */
-
-             border-bottom: 1px dashed rgba(135, 206, 250, 0.3); /* Línea punteada sutil */
-
-             padding-bottom: 8px;
-
+             font-family: 'Orbitron', sans-serif; /* Fuente diferente para títulos */
+             color: #99ffff; /* Cian más claro para títulos */
+             border-bottom: 1px dashed rgba(0, 255, 255, 0.4); /* Línea punteada cian */
+             padding-bottom: 10px;
              margin-bottom: 20px;
-
-             font-weight: normal; /* Menos grueso */
-
+             font-weight: 400; /* Peso regular de Orbitron */
+             text-shadow: 0 0 5px rgba(0, 255, 255, 0.5); /* Sombra sutil en títulos */
         }
-
-
 
         /* Portada específica */
-
         .pagina-contenido:first-child {
-
             text-align: center;
-
-            padding-top: 80px;
-
+            padding-top: 10vh; /* Usar vh para centrado vertical */
+            display: flex; /* Usar flexbox para centrar verticalmente */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* Eliminar padding-bottom o ajustar si necesario */
+            padding-bottom: 30px;
         }
-
          .pagina-contenido:first-child h1 {
-
-             font-size: 2.8em;
-
-             color: #ffffff; /* Blanco brillante para el título principal */
-
+             font-size: 3em; /* Título principal más grande */
+             color: #ffffff; /* Blanco para el título principal */
              border-bottom: none;
-
-             letter-spacing: 2px; /* Espaciado entre letras */
-
+             letter-spacing: 3px; /* Mayor espaciado entre letras */
+             text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6); /* Doble sombra para efecto neón */
+             margin-bottom: 10px;
          }
-
          .pagina-contenido:first-child p {
-
-            color: #7f8cbb; /* Color más apagado para subtítulos/autor */
-
-            font-size: 1.1em;
-
+            color: #b0e0e6; /* Color azul claro para subtítulos/autor */
+            font-size: 1.3em;
+            margin-top: 0; /* Eliminar margen superior */
+            margin-bottom: 5px; /* Reducir margen inferior */
          }
-
+            /* Ajuste específico para el margen del último párrafo en la portada */
+           .pagina-contenido:first-child p:last-of-type {
+               margin-bottom: 20px; /* Mantener un margen normal antes del código */
+           }
 
 
         /* Estilo para simular código o fórmulas */
-
          .pagina-contenido code {
-
-            background-color: rgba(42, 58, 87, 0.7); /* Fondo translúcido */
-
-            color: #a0f0a0; /* Verde pálido como en terminales */
-
-            padding: 3px 6px;
-
-            border-radius: 3px;
-
+            background-color: rgba(0, 255, 255, 0.1); /* Fondo translúcido cian */
+            color: #7fffd4; /* Aguamarina brillante */
+            padding: 4px 7px;
+            border-radius: 4px;
             font-size: 0.95em;
+            border: 1px solid rgba(0, 255, 255, 0.3); /* Borde sutil */
+            text-shadow: 0 0 3px rgba(127, 255, 212, 0.5); /* Sombra sutil en código */
+         }
 
+         /* Estilo para elementos matemáticos (ej. LaTeX simulado) */
+         .pagina-contenido span[data-math] {
+            font-style: italic; /* Cursiva para fórmulas */
+            color: #ffff00; /* Amarillo brillante para fórmulas */
+            text-shadow: 0 0 5px rgba(255, 255, 0, 0.6); /* Sombra amarilla */
          }
 
 
-
-        /* Navegación con estilo de interfaz */
-
+        /* Navegación con estilo de interfaz mejorado */
         .navegacion {
-
             display: flex;
-
             justify-content: space-between;
-
+            align-items: center; /* Centra verticalmente los elementos */
             padding: 15px 40px;
-
-            border-top: 1px solid #4a5a94; /* Borde superior azul */
-
-            background-color: #0b1120; /* Base de navegación muy oscura */
-
+            border-top: 2px solid #00ffff; /* Borde superior cian brillante */
+            background-color: rgba(0, 5, 15, 0.7); /* Base de navegación muy oscura y translúcida */
+            position: relative;
+            z-index: 10; /* Asegura que esté sobre las páginas */
         }
 
+        .navegacion::before {
+            content: '';
+            position: absolute;
+            top: -1px; /* Superponer ligeramente al borde */
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #00ffff, transparent); /* Línea de escaneo en el borde */
+            animation: scanlineNav 3s linear infinite;
+        }
+
+        @keyframes scanlineNav {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
 
 
         .navegacion button {
-
-            padding: 8px 18px;
-
-            font-size: 0.95em;
-
+            padding: 10px 20px;
+            font-size: 1em;
             cursor: pointer;
-
-            background-color: #2a3a57; /* Fondo de botón azul oscuro */
-
-            color: #e0e0f0; /* Texto claro */
-
-            border: 1px solid #5a6a9a; /* Borde azul más claro */
-
-            border-radius: 4px;
-
+            background-color: #00ffff; /* Fondo de botón cian */
+            color: #051025; /* Texto muy oscuro para contraste */
+            border: none; /* Sin borde */
+            border-radius: 5px;
             font-family: inherit; /* Heredar fuente monoespaciada */
-
-            transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
-
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.1s;
+            text-transform: uppercase; /* Texto en mayúsculas */
+            letter-spacing: 1px;
         }
-
-
 
         .navegacion button:hover:not(:disabled) {
-
-             background-color: #3a4a67; /* Más claro al pasar el ratón */
-
-             color: #ffffff; /* Texto blanco al pasar el ratón */
-
-             box-shadow: 0 0 10px rgba(135, 206, 250, 0.6); /* Brillo azul al pasar el ratón */
-
+             background-color: #99ffff; /* Cian más claro */
+             box-shadow: 0 0 15px rgba(0, 255, 255, 0.8); /* Brillo intenso */
+             transform: scale(1.05); /* Ligero aumento de tamaño */
         }
 
+        .navegacion button:active:not(:disabled) {
+             transform: scale(0.98); /* Ligero hundimiento al hacer click */
+        }
 
 
         .navegacion button:disabled {
-
             cursor: not-allowed;
-
-            opacity: 0.4;
-
-            background-color: #1a2a47; /* Más oscuro y menos opaco si está desactivado */
-
+            opacity: 0.5;
+            background-color: #1a3a4a; /* Más oscuro y menos opaco */
             box-shadow: none;
-
-            color: #7f8cbb;
-
+            color: #708090;
+            transform: none;
         }
-
-
 
         .numero-pagina {
-
-            font-size: 0.9em;
-
-            color: #87cefa; /* Número de página en azul cielo */
-
-            align-self: center;
-
+            font-size: 1em;
+            color: #00ffff; /* Número de página cian */
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            min-width: 100px; /* Asegura espacio para el texto */
+            text-align: center;
         }
 
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .libro-container {
+                width: 95%;
+                height: 95vh;
+                transform: none; /* Elimina la inclinación 3D en móviles */
+            }
+
+            .pagina-contenido {
+                padding: 20px 25px; /* Menos padding */
+                font-size: 1em;
+            }
+
+            .pagina-contenido h1 {
+                font-size: 2.2em; /* Títulos más pequeños */
+            }
+            .pagina-contenido h2 {
+                font-size: 1.5em;
+            }
+
+            .pagina-contenido:first-child h1 {
+                font-size: 2.5em; /* Título portada más pequeño */
+                letter-spacing: 1px;
+            }
+            .pagina-contenido:first-child p {
+                font-size: 1.1em;
+                margin-bottom: 3px; /* Reducir margen en responsive */
+            }
+            /* Ajuste específico para el margen del último párrafo en la portada responsive */
+           .pagina-contenido:first-child p:last-of-type {
+               margin-bottom: 15px; /* Mantener un margen antes del código en responsive */
+           }
 
 
+            .navegacion {
+                flex-direction: column; /* Botones y número apilados */
+                padding: 15px 20px;
+            }
+
+            .navegacion button {
+                width: 100%; /* Botones de ancho completo */
+                margin: 5px 0; /* Espacio entre botones */
+            }
+
+            .numero-pagina {
+                margin: 10px 0; /* Espacio alrededor del número */
+                min-width: auto;
+            }
+        }
     </style>
-
 </head>
-
 <body>
 
-
-
     <div class="libro-container">
-
         <div class="pagina-contenido activa">
-
-            <h1>Teorema del Universo Lector</h1>
-
-            <p>Por: Dr. Cosmos Byte</p>
-
-            <br><br>
-
-            <p>(Sector 0 - Portada)</p>
-
-            <p><code>E = mc^lector</code></p>
-
+            <h1>Una guía galáctica para enseñar la Teoría de Números</h1>
+            <p>Autores:</p>
+            <p>Andres Rojas</p>
+            <p>Valentina Taque</p>
+            <p><code>Andro-Radix y Nébula-Tina te dan la bienvenida al planeta Numerix</code></p>
         </div>
 
-
-
         <div class="pagina-contenido">
-
             <h2>Capítulo 1: Singularidad Inicial</h2>
-
-            <p>En el vacío cuántico de la narrativa, donde las constantes universales de la trama fluctuaban, un punto de infinita densidad argumental estaba a punto de expandirse. Las coordenadas eran $(0, 0, 0)$ en el espacio-tiempo literario.</p>
-
-            <p>Nuestro protagonista, un simple navegador de datos llamado Alex, compilaba logs binarios, ignorante de las ecuaciones diferenciales que regirían su destino. $\frac{d(historia)}{dt} = k \cdot Emocion$.</p>
-
+            <p>En el vacío cuántico de la narrativa, donde las constantes universales de la trama fluctuaban, un punto de infinita densidad argumental estaba a punto de expandirse. Las coordenadas eran <span>$(0, 0, 0)$</span> en el espacio-tiempo literario.</p>
+            <p>Nuestro protagonista, un simple navegador de datos llamado Alex, compilaba logs binarios, ignorante de las ecuaciones diferenciales que regirían su destino. <span>$\frac{d(historia)}{dt} = k \cdot Emocion}$</span>.</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
         </div>
-
-
 
         <div class="pagina-contenido">
-
             <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            <p>El algoritmo de decisión presentó una bifurcación: un hipervínculo estable hacia el `cluster` de datos seguros [Opción A], o un portal inestable hacia la nebulosa de código desconocido [Opción B]. Fórmula de riesgo: $R = \int_{A}^{B} |Incertidumbre| d(camino)$</p>
-
-            <p>Recordó un axioma olvidado: "La complejidad máxima reside en la ruta menos transitada". Con un `commit` a lo desconocido, Alex eligió [Opción B].</p>
-
+            <p>El algoritmo de decisión presentó una bifurcación: un hipervínculo estable hacia el <code>cluster</code> de datos seguros [Opción A], o un portal inestable hacia la nebulosa de código desconocido [Opción B]. Fórmula de riesgo: <span>$R = \int_{A}^{B} |Incertidumbre| d(camino)$</span></p>
+            <p>Recordó un axioma olvidado: "La complejidad máxima reside en la ruta menos transitada". Con un <code>commit</code> a lo desconocido, Alex eligió [Opción B].</p>
+            <p>Este es otro párrafo para hacer la página más larga y probar qué ocurre sin scroll.</p>
         </div>
-
 
 
          <div class="pagina-contenido">
-
             <h2>Capítulo 2: Nebulosa de Código</h2>
-
-            <p>La atmósfera virtual crepitaba con paquetes de datos corruptos y funciones recursivas sin fin. Firmas energéticas anómalas $\lambda = 404$ nm aparecían en su HUD.</p>
-
-            <p>Se encontró con fractales conscientes y bucles `while(true)` que distorsionaban la realidad local. Pequeños glitches luminosos, ¿serían variables sin declarar o algo más?</p>
-
+            <p>La atmósfera virtual crepitaba con paquetes de datos corruptos y funciones recursivas sin fin. Firmas energéticas anómalas <span>$\lambda = 404$ nm</span> aparecían en su HUD.</p>
+            <p>Se encontró con fractales conscientes y bucles <code>while(true)</code> que distorsionaban la realidad local. Pequeños glitches luminosos, ¿serían variables sin declarar o algo más?</p>
             <p><code>// TODO: Implementar lógica de supervivencia</code></p>
-
         </div>
-
-
 
         <div class="pagina-contenido">
-
             <p>Este es el final del ejemplo del libro galáctico-matemático.</p>
-
             <p>Puedes añadir tantas páginas como necesites, manteniendo la estructura:</p>
-
             <code>&lt;div class="pagina-contenido"&gt;...tu texto aquí...&lt;/div&gt;</code>
-
             <p>Calculando trayectoria de salida... ¡Gracias por leer!</p>
-
             <p>(Sector Final - Contraportada)</p>
-
-             <p>$\sum_{i=1}^{n} paginas = LibroCompleto$</p>
-
+             <p><span>$\sum_{i=1}^{n} paginas = LibroCompleto}$</span></p>
         </div>
-
-
 
         <div class="navegacion">
-
             <button id="btn-anterior" onclick="irPaginaAnterior()">// Anterior</button>
-
             <span class="numero-pagina" id="num-pagina"></span>
-
             <button id="btn-siguiente" onclick="irPaginaSiguiente()">Siguiente //</button>
-
+           
         </div>
-
     </div>
 
-
-
     <script>
-
-        // --- El CÓDIGO JAVASCRIPT es el MISMO que antes ---
-
-        // (No necesita cambios para la nueva temática visual)
-
-
-
         const paginas = document.querySelectorAll('.pagina-contenido');
-
         const btnAnterior = document.getElementById('btn-anterior');
-
         const btnSiguiente = document.getElementById('btn-siguiente');
-
         const numPaginaSpan = document.getElementById('num-pagina');
-
         let paginaActualIndice = 0;
 
-
-
         function mostrarPagina(indice) {
-
+            // Oculta todas las páginas
             paginas.forEach(pagina => {
-
                 pagina.classList.remove('activa');
-
             });
 
-            paginas[indice].classList.add('activa');
+            // Muestra la página actual
+            if (indice >= 0 && indice < paginas.length) {
+                paginas[indice].classList.add('activa');
+                numPaginaSpan.textContent = `Sector ${indice + 1} / ${paginas.length}`; // Cambiado a "Sector"
+                // Con overflow: hidden, scrollTop = 0 ya no es estrictamente necesario para el usuario,
+                // pero lo mantenemos por si cambias a otro overflow después.
+                paginas[indice].scrollTop = 0;
+            }
 
-            numPaginaSpan.textContent = `Sector ${indice + 1} / ${paginas.length}`; // Cambiado a "Sector"
 
+            // Habilita/Deshabilita botones
             btnAnterior.disabled = indice === 0;
-
             btnSiguiente.disabled = indice === paginas.length - 1;
 
-            paginas[indice].scrollTop = 0;
-
         }
-
-
 
         function irPaginaSiguiente() {
-
             if (paginaActualIndice < paginas.length - 1) {
-
                 paginaActualIndice++;
-
                 mostrarPagina(paginaActualIndice);
-
             }
-
         }
-
-
 
         function irPaginaAnterior() {
-
             if (paginaActualIndice > 0) {
-
                 paginaActualIndice--;
-
                 mostrarPagina(paginaActualIndice);
-
             }
-
         }
 
-
-
         document.addEventListener('DOMContentLoaded', () => {
-
             mostrarPagina(paginaActualIndice);
-
         });
-
     </script>
 
-
-
 </body>
-
 </html>
